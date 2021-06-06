@@ -12,3 +12,6 @@ The sessions are arranged as follows:
 		- Data importing and exporting  
 		- Writing own functions  
 		- Installing and using open source packages  
+1. Understanding Your Data
+		- Data Types  
+		- Common Data Formats  
