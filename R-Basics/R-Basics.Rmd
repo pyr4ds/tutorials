@@ -1,0 +1,179 @@
+---
+title: "Getting Started With R"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = TRUE, results = TRUE, exercise.lines = 3)
+```
+
+## Introduction  
+
+**R is a A Programming Environment for Data Analysis and Graphics**  
+
+This guide will give you a taste of what R can do for you. To get the most out of this guide, read it whilst doing the examples and exercises using RStudio.  
+
+### Learning Objectives  
+
+After completing this tutorial, you will be able to:  
+- Optimally use RStudio
+- Document your code for the "next person"
+- Effectively use R data objects
+- Define and use own functions  
+
+### Pre-requisites  
+
+1. R and RStudio are installed  
+
+### Starting R and RStudio  
+
+R starts automatically when you open RStudio. The console starts with information about the version number, license and contributors. The last line is a standard prompt “>” that indicates R is ready and expecting instructions todo something.  
+
+### Quitting R & RStudio  
+
+When you quit RStudio you will be asked whether to save workspace with two options: 
+
+- "Yes" – All objects created during an R session are stored permanently in a file for use in future R sessions.  
+- "No" – You will start with a fresh R session next time you open RStudio.  
+
+### R Help  
+
+R ships with a powerful help utility that can be used to query useful information about any given topic. 
+
+- **`help()` function** - accessible from R console, can be used to get documentation details of R methods and objects.  
+
+```
+help(rep)
+?sum
+```  
+
+- **`apropos()` function** - Used to do keyword search, with the keyword in a quoted string.  
+
+`apropos('seq')`  
+
+```{r apropos-function}
+apropos('seq')
+```  
+
+- **`example()` function** - Used to run examples at the end of `help` for  function. 
+
+`example(seq)`  
+ 
+- **RStudio Help** - Rstudio provides search box in the “Help” tab to make your life easier. If the method being searched isn't in base R, the package containing the method must be loaded. This applies for `help`, `example` and `apropos` functions as well.  
+ 
+ 
+
+### Code & Comments in R  
+
+Everything you type into an R script is code, unless you demark it otherwise.  
+A comment is defined using a `#` sign, anything to the right of the `#` sign is ignored by `R`.
+
+
+## R Object Types  
+
+The entities that R creates and manipulates are known as objects. Objects are created and stored by name. `objects()` or `ls()` is used to display names of the objects which are stored in R environment. `rm()` is used to remove objects.  
+
+### Object Types (Data Types in other programming languages)  
+
+Generally, while doing programming in any programming language, you need to use variables to store information. Variables are nothing but reserved memory locations to store values. 
+
+#### Atomic Types  
+
+The simplest of these objects is the `vector object` which are six in number. The other R-Objects are built upon the atomic vectors.   
+
+1. logical  
+   - TRUE, FALSE  
+   ```{r logical-type}
+   var <- TRUE
+   class(var)
+   ```
+**Logical type playground**  
+   ```{r logical-playbox, exercise=TRUE}
+   
+   ```
+   
+2. numeric  
+    - 1, 1.67, 50 ...  
+    ```{r numeric-type}
+    var1 <- 1
+    print(var1)
+    print(class(var1))
+    var2 <- 1.35
+    print(var2)
+    print(class(var2))
+    ```
+**Numeric type playground**  
+    ```{r numeric-playbox, exercise=TRUE}
+   
+    ```
+    
+3. integer
+    - 1L, 2L, 50L  
+    ```{r integer-type}
+    var1 <- 5L
+    print(var1)
+    print(class(var1))
+    
+    var2 <- 5
+    print(var2)
+    print(class(var2))
+    ```
+**Integer type playground**  
+    ```{r integer-playbox, exercise=TRUE}
+   
+    ```
+    
+4. complex  
+    - 5 + 2i
+    ```{r complex-type}
+    var <- 4 + 3i
+    print(var)
+    print(class(var))
+    ```
+    
+5. character
+    - 'a', 'six', 'FALSE', '56.87', 'an orange'
+    ```{r char-type, echo = TRUE, results = TRUE}
+    var <- 'TRUE'
+    print(var)
+    print(class(var))
+    ```
+**Character type playground**      
+    ```{r char-playbox, exercise=TRUE}
+   
+    ```
+    
+6. raw  
+    - 'An Orange' is stored as '41 6e 20 4f 72 61 6e 67 65'
+    ```{r raw-type}
+    var <- charToRaw('Atomic Raw Type')
+    print(var)
+    print(class(var))
+    ```
+
+#### Derrived Types  
+
+These are objects created from a combination of atomic types.  
+
+1. vectors
+2. lists
+3. date
+4. matrices
+5. arrays
+6. factors
+7. data frames
+9. tibble  
+
+**Missing values have a special object type `NULL`, `NA` and `NaN`**  
+
+## Data Import/Export  
+
+
+
+## Own Functions  
+
+
+## Open Source packages
+
