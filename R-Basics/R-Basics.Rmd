@@ -1,5 +1,6 @@
 ---
 title: "Getting Started With R"
+author: 'Jason Kinyua'
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
