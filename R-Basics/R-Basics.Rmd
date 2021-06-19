@@ -7,7 +7,7 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
-knitr::opts_chunk$set(echo = TRUE, results = TRUE, exercise.lines = 3)
+knitr::opts_chunk$set(echo = TRUE, results = TRUE, exercise.lines = 7)
 ```
 
 ## Introduction  
@@ -19,9 +19,9 @@ This guide will give you a taste of what R can do for you. To get the most out o
 ### Learning Objectives  
 
 After completing this tutorial, you will be able to:  
-- Optimally use RStudio
-- Document your code for the "next person"
-- Effectively use R data objects
+- Optimally use RStudio  
+- Document your code for the "next person"  
+- Effectively use R data objects  
 - Define and use own functions  
 
 ### Pre-requisites  
@@ -82,7 +82,7 @@ Generally, while doing programming in any programming language, you need to use 
 
 #### Atomic Types  
 
-The simplest of these objects is the `vector object` which are six in number. The other R-Objects are built upon the atomic vectors.   
+The simplest of these objects is the `atomic objects` which are six in number. The other R-Objects are built upon the atomic vectors.   
 
 1. logical  
    - TRUE, FALSE  
