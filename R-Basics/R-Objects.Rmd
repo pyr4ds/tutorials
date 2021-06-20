@@ -138,7 +138,8 @@ print(nlevels(factor_apple))
 Classical use case of factors is preserving custom order of character objects which doesn't follow usual `sort` standard. Take for instance, ordering months of year.  
 
 ```{r sort-months}
-year.months <- c("January","February","March","April","May","June","July","August","September","October","November","December")
+year.months <- c("January","February","March","April","May","June","July","August","September","October","N```ovember","December")
+
 my.months <- sample(year.months)
 print("Randomized months")
 my.months
