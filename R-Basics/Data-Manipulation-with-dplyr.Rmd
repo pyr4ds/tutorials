@@ -1,0 +1,164 @@
+---
+title: "Data Manipulation in R with dplyr"
+author: "Jason Kinyua"
+date: "7/31/2021"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, results = TRUE)
+```
+
+## Introduction
+
+- Data manipulation is a way of modifying a dataset 
+- Is the process of making data more organized and useful.
+- Common packages used in data manipulation in R are:
+    - **dplyr** 
+    - **data.table**
+- Each of these packages has its own pros and cons.
+- We will focus on [**dplyr**](https://dplyr.tidyverse.org/) in this tutorial
+
+
+### Using dplyr for data manipulation
+
+- dplyr is part of the [**tidyverse**](https://www.tidyverse.org/)
+- dplyr has 5 main verbs used for the common data manipulation tasks.
+    - `mutate()` adds new variables that are functions of existing variables
+    - `select()` picks variables based on their names.
+    - `filter()` picks cases based on their values.
+    - `summarise()` reduces multiple values down to a single summary.
+    - `arrange()` changes the ordering of the rows.
+- These all combine naturally with `group_by()` which allows you to perform any operation **by group**.
+
+### A Peep Into Our Dataset
+
+This data was extracted from [Worldometer Repository](https://www.worldometers.info/world-population/population-by-country/)
+
+```{r}
+col.names <- c(
+'#',
+'Country (or dependency)',
+'Population (2020)',
+'Yearly Change',
+'Net Change',
+'Density (P/Km²)',
+'Land Area (Km²)',
+'Migrants (net)',
+'Fert. Rate',
+'Med. Age',
+'Urban Pop (%)',	
+'World Share'
+)
+data <- read.csv("../data/world.pop.csv", header=FALSE, sep="\t")
+colnames(data) <- col.names
+head(data)
+```
+
+#### `arrange()` verb
+
+`dplyr::arrange()` orders the rows of a data frame by the values of one or more columns:
+
+```{r arrange-ascending}
+# install.packages('dplyr', deps=TRUE, repos="https://cran.r-project.org")
+library(dplyr)
+
+# order the data in ascending order, using country variable
+data %>% arrange(`Country (or dependency)`)
+```
+```{r arrange-descending}
+# order the data in descending order, using country variable
+data %>% arrange(desc(`Country (or dependency)`))
+```
+
+#### `select()` verb  
+
+`dplyr::select()` subsets columns by position, name, function of name, or other property:
+
+```{r select-verb}
+# note that after arrange operation, Index column (#) is misleading and not useful in this case!
+# Removing the would be a great way of reducing confusion
+data %>% 
+	arrange(`Country (or dependency)`) %>%
+	select(-`#`) # use of - sign implies delete the column
+```
+This looks neat and easy to read without misleading # column. 
+This being already analyzed and aggregated data, we may not be in a position to carry out complex operations. However, assume someone asks that you provide specific data columns! This means we need to subset the dataset discarding all other columns except columns of interest!
+
+```{r subset-specific-cols}
+aoi.data <- data %>%
+	select(c(
+		`Country (or dependency)`, 
+		`Population (2020)`, 
+		`Net Change`, 
+		`Density (P/Km²)`, 
+		`Urban Pop (%)`, 
+		`World Share`
+	)) %>% 
+	arrange(`Country (or dependency)`)
+aoi.data
+```
+This looks cool. In addition to above requirement, assume you are interested in some specific countries and not all junk in the dataset! The subset strategy here will change a little. `give me rows where country is in list of given countries`.
+
+#### `filter()` verb
+
+`dplyr::filter()` selects rows where an expression is `TRUE`
+
+```{r filter-matching}
+# First pick countries of interest. I will select 20 countries in original dataset
+countries <- data$`Country (or dependency)`[16:35]
+countries # show what is in countries object
+aoi.data <- data %>% 
+	filter(`Country (or dependency)` %in% countries) %>% 
+	arrange(`Country (or dependency)`)
+aoi.data
+```
+
+Looking at data columns, whole data is represented by character objects. 
+Before we are able to carry out mathematical operations in such data, we need to convert to appropriate types!
+
+#### `mutate()` verb
+
+`dplyr::mutate()` creates new variables from existing variables
+
+```{r cast-pop-to-int}
+# instead of creating a new data column, we are overwriting the existing
+aoi.data %>% 
+	mutate(`Population (2020)` = as.integer(gsub(",", "", `Population (2020)`)))
+```
+Whoa! let's repeat same procedure for `Net Change` and `Density (P/Km²)` columns.
+
+```{r cast-num-types}
+aoi.data <- aoi.data %>% 
+	mutate(
+		`Population (2020)` = as.integer(gsub(",", "", `Population (2020)`)),
+		`Net Change` = as.integer(gsub(",", "", `Net Change`)),
+		`Density (P/Km²)` = as.integer(gsub(",", "", `Density (P/Km²)`))
+	)
+
+aoi.data
+```
+
+Finally, assume you are asked to give approximate `World Share` by the given subset of 20 countries!
+This require that you sum up world share for each individual country.
+
+#### `summarise()` verb
+
+`dplyr::summarise()` computes one or more summaries for each group
+
+```{r}
+aoi.data %>% 
+	mutate(
+		`World Share` = as.integer(gsub("%", "", `World Share`))
+	) %>%
+	summarise(`World Share` = sum(`World Share`))
+
+```
+The 20 countries account for about 4% of World Population.
+Voila! We have covered the five verbs of `dplyr` data manipulation package.
+
+## General advice
+
+- Practice, practice and practice some more. Try other `dplyr` methods not covered using more interesting dataset, say [covid19](https://github.com/CSSEGISandData/COVID-19) or  [World Bank Data](https://data.worldbank.org/indicator/SP.POP.TOTL)
+- [dplyr website](https://dplyr.tidyverse.org/)
+- Google is your friend  
